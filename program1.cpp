@@ -15,20 +15,20 @@ struct  PERSON
 };
 
 
-void Display(PERSON *P, int N) {
+void Display(PERSON P[], int N) {
 
          for(int i = 0; i < N; i++)
          {
 
 
-           cout << P[i].Name << " " << P[i].Balance << endl;
+           cout << P[i].Name << ' ' << P[i].Balance << endl;
 
          }
 
 }
 
 
-void FindRichest(PERSON *P, int N)
+void FindRichest(PERSON P[], int N)
 {
 
 
@@ -47,7 +47,7 @@ void FindRichest(PERSON *P, int N)
 
 }
 
-void Deposit(string CustName, PERSON *P, int N)
+void Deposit(string CustName, PERSON P[], int N)
 {
 
   float depositAmount = 0;
@@ -58,16 +58,16 @@ void Deposit(string CustName, PERSON *P, int N)
     {
       cout << CustName;
       cout << ", how much would you like to deposit? ";
+      cin >> depositAmount;
+      P[j].Balance = P[j].Balance + depositAmount;
+      cout << "Now your new balance is " << P[j].Balance;
     }
-  cin >> depositAmount;
-  P[j].Balance = P[j].Balance + depositAmount;
-  cout << "Now your new balance is " << P[j].Balance;
   }
 
 }
 
 
-void NewCopy (string filename, PERSON *P, int N)
+void NewCopy (string filename, PERSON P[], int N)
 {
 
   ofstream output;
@@ -76,7 +76,8 @@ void NewCopy (string filename, PERSON *P, int N)
   for (int i = 0; i < N; i++)
   {
 
-    output << P[i].Name << P[i].Balance << endl;
+    output << P[i].Name << " " << P[i].Balance << endl;
+
   }
 
   output.close();
@@ -92,7 +93,8 @@ int main()
   int N = 0;
   string line;
 
-  while (getline (inFile, line))
+  while (getline (inFile, line)
+)
   {
     N++;
   }
@@ -112,7 +114,7 @@ int main()
     float pay;
     inFile >> name >> lname;
     inFile >> pay;
-    name = name + ' ' + lname;
+    name = name + " " + lname;
     strcpy(P[i].Name, name.c_str());
     P[i].Balance = pay;
     inFile.ignore();
@@ -129,10 +131,12 @@ cout << "Enter your full name to deposit money: ";
 getline(cin, CustName);
 
 Deposit(CustName, P, N);
+cout <<"test2";
 
 NewCopy("data.txt", P, N);
 
-system("read -p 'Press Enter to continue...' var");
+//system("read -p 'Press Enter to continue...' var");
 
 return 0;
+
 }
